@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/" xmlns="http://www.w3.org/1999/html">
+<!-- Basic -->
+
+<head th:replace="~{fragments::head}">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+<!-- Start Main Top -->
+<div th:replace="~{fragments::main-top}">
+</div>
+<!-- End Main Top -->
+
+<!-- Start Main Top -->
+<header th:replace="~{fragments::main-header}">
+</header>
+<!-- End Main Top -->
+
+<!-- Start Cart  -->
+<div class="cart-box-main">
+    <div class="container">
+        <form th:action="@{/add-order}" method="post" th:object="${customer}">
+            <div class="row" style="background: #fff">
+                    <div class="checkout-block">
+                        <div class="checkout-block-title">Địa chỉ giao hàng</div>
+                        <div class="checkout-block-content">
+                            <div class="checkout-block-address">
+                                <div class="input-checkout">
+                                    <label> Họ và tên người nhận</label>
+                                    <div class="input-item">
+                                        <div class="input-group">
+                                            <input type="text"
+                                                   required
+                                                   th:field="${customer.username}"
+                                                   class="check-shipping-info"
+                                                   id="username"
+                                                   placeholder="Họ và tên"
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-checkout">
+                                    <label>Email</label>
+                                    <div class="input-item">
+                                        <div class="input-group">
+                                            <input type="email"
+                                                   required
+                                                   class="check-shipping-info"
+                                                   id="email"
+                                                   th:field="*{email}"
+                                                   placeholder="Email"
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-checkout">
+                                    <label>Số điện thoại</label>
+                                    <div class="input-item">
+                                        <div class="input-group">
+                                            <input type="text"
+                                                   required
+                                                   class="check-shipping-info"
+                                                   id="phone"
+                                                   name="phone"
+                                                   th:field="*{phone}"
+                                                   placeholder="Số điện thoại"
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-checkout">
+                                    <label>Địa chỉ nhận hàng</label>
+                                    <div class="input-item">
+                                        <div class="input-group">
+                                            <input type="text"
+                                                   required
+                                                   class="check-shipping-info"
+                                                   id="address"
+                                                   name="address"
+                                                   th:field="*{address}"
+                                                   placeholder="Địa chỉ người nhận"
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkout-block">
+                        <div class="checkout-block-title">Phương thức thanh toán</div>
+                        <div class="checkout-block-content">
+                            <div class="checkout-block-radio">
+                                <ul class="checkout-block-radio-list">
+                                    <li class="checkout-block-item">
+                                        <div class="payment-cash">
+                                            <div class="icon-container">
+                                                <label class="payment-label">
+                                                    <div class="payment-text">
+                                                        <div>
+                                                            <img th:src="@{/images/ico_cashondelivery.svg}"
+                                                                style="background: no-repeat center center"
+                                                                 width="40px"
+                                                                 alt=""
+                                                            >
+                                                        </div>
+                                                        <div class="payment-name">Thanh toán bằng tiền mặt</div>
+                                                        <input name="paymentMethod"
+                                                               type="radio" checked
+                                                               class="payment-option"
+                                                               required>
+                                                        <span class="radiomark"></span>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="checkout-block-item">
+                                        <div class="payment-cash">
+                                            <div class="icon-container">
+                                                <label class="payment-label">
+                                                    <div class="payment-text">
+                                                        <div>
+                                                            <img th:src="@{/images/ico_visa.svg}"
+                                                                 style="background: no-repeat center center"
+                                                                 width="40px"
+                                                                 alt=""
+                                                            >
+                                                        </div>
+                                                        <div class="payment-name">Visa</div>
+                                                        <input id="" name="paymentMethod"
+                                                               type="radio"
+                                                               class="payment-option"
+                                                               required>
+                                                        <span class="radiomark"></span>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="checkout-block-item">
+                                        <div class="payment-cash">
+                                            <div class="icon-container">
+                                                <label class="payment-label">
+                                                    <div class="payment-text">
+                                                        <div>
+                                                            <img th:src="@{/images/ico_momopay.svg}"
+                                                                 style="background: no-repeat center center"
+                                                                 width="40px"
+                                                                 alt=""
+                                                            >
+                                                        </div>
+                                                        <div class="payment-name">Ví Momo</div>
+                                                        <input name="paymentMethod"
+                                                               type="radio"
+                                                               class="payment-option"
+                                                               required>
+                                                        <span class="radiomark"></span>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkout-block">
+                        <div class="checkout-block-title">Kiểm tra lại đơn hàng</div>
+                        <div class="checkout-block-content">
+                            <div class="checkout-products">
+                                <div class="checkout-product-item" th:each="item : ${shoppingCart.getCartItems()}">
+                                    <div class="checkout-product-img" >
+                                        <img th:src="'data:image/jepg;base64,' + ${item.product.image}" alt="image">
+                                    </div>
+                                    <div class="checkout-product-detail">
+                                        <div class="product-detail-name">
+                                            <div th:text="${item.product.name}"></div>
+                                        </div>x
+                                        <div class="product-detail-price">
+                                            <div th:text="${#numbers.formatDecimal(item.product.costPrice, 0, 'POINT', 0, 'COMMA') + 'đ'}"></div>
+                                            <div
+                                                    class="checkout-original-price"
+                                                    th:text="${#numbers.formatDecimal(item.product.salePrice, 0, 'POINT', 0, 'COMMA') + 'đ'}"
+                                            >
+                                            </div>
+                                        </div>
+                                        <div
+                                                class="product-detail-qty"
+                                                th:text="${item.quantity}"
+                                        >
+                                            <span>Số lượng: </span>
+                                        </div>
+                                        <div
+                                                class="product-detail-total"
+                                                th:text="${item.unitPrice * item.quantity}"
+                                        >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="checkout-confirm">
+                                    <div class="checkout-confirm-inner">
+                                        <div class="container">
+                                            <div class="checkout-total">
+                                                <div class="checkout-subtotal">
+                                                    <div>Thành tiền</div>
+                                                    <div th:text="${#numbers.formatDecimal(shoppingCart.totalPrice, 0, 'POINT', 0, 'COMMA') + 'đ'}"></div>
+                                                </div>
+                                                <div class="checkout-shipping">
+                                                    <div>Phí vận Chuyển</div>
+                                                    <div>19.000 đ</div>
+                                                </div>
+                                                <div class="checkout-total-grand">
+                                                    <div>Tổng số tiền</div>
+                                                    <div th:text="${#numbers.formatDecimal(shoppingCart.totalPrice + 19000, 0, 'POINT', 0, 'COMMA') + 'đ'}"></div>
+                                                </div>
+                                            </div>
+                                            <div class="checkout-bottom">
+                                                <div>
+                                                    <a th:href="@{/cart}">
+                                                        <span>
+                                                            <img th:src="@{/images/btn_back.svg}" alt="">
+                                                        </span>
+                                                        <span>Quay về giỏ hàng</span>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <div class="btn-box">
+                                                        <button type="submit"
+                                                                title="Xác nhận thanh toán"
+                                                                class="btn-confirm-ordered"
+                                                        >
+                                                            <span>Xác nhận thanh toán</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End Cart -->
+<footer th:replace="~{fragments::footer}"></footer>
+
+<div th:replace="~{fragments::script}"></div>
+</body>
+
+</html>

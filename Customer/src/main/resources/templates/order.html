@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<!-- Basic -->
+
+<head th:replace="~{fragments::head}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+<!-- Start Main Top -->
+<div th:replace="~{fragments::main-top}">
+</div>
+<!-- End Main Top -->
+
+<!-- Start Main Top -->
+<header th:replace="~{fragments::main-header}">
+</header>
+<!-- End Main Top -->
+
+<div class="cart-box-main">
+    <div class="container">
+        <div class="cart-ui-content row">
+            <div class="col-lg-12">
+                <div class="table-main table-responsive">
+                    <div>
+                        <div class="header-cart-item">
+                            <div class="flex-shared" style="flex-basis: 17%">
+                                Ngày đặt hàng
+                            </div>
+                            <div class="flex-shared">
+                                Địa chỉ
+                            </div>
+                            <div class="flex-shared">
+                                Tình trạng đơn hàng
+                            </div>
+                            <div class="flex-shared">
+                                Phương thức thanh toán
+                            </div>
+                            <div>
+                                Số lượng
+                            </div>
+                            <div>
+                                Tổng tiền
+                            </div>
+                            <div></div>
+                        </div>
+                        <div class="product-cart">
+                            <div th:each="order : ${orders}" class="header-cart-item"
+                                 style="border-bottom: 1px solid #ededed">
+                                <div class="flex-shared" style="flex-basis: 17%">
+                                    <span th:text="${order.orderDate}"></span>
+                                </div>
+
+                                <div th:object="${customer}" class="flex-shared">
+                                    <span th:text="${customer.address}"></span>
+                                </div>
+
+                                <div class="flex-shared">
+                                    <span th:text="${order.orderStatus}"></span>
+                                </div>
+                                <div class="flex-shared">
+                                    <span th:text="${order.paymentMethod}"></span>
+                                </div>
+                                <div>
+                                    <span th:text="${order.quantity}"></span>
+                                </div>
+                                <div>
+                                    <span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'COMMA') + 'đ'}"></span>
+                                </div>
+                                <div>
+<!--                                    <a th:href="@{/ordersItem}" class="order-detail">-->
+<!--                                        Chi tiết-->
+<!--                                    </a>-->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments::footer}"></footer>
+
+<!-- ALL JS FILES -->
+<div th:replace="~{fragments::script}"></div>
+</body>
+
+</html>

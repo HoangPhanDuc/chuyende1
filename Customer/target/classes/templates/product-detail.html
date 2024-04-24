@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<!-- Basic -->
+
+<head>
+    <div th:replace="~{fragments::head}"></div>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+<!-- Start Main Top -->
+<div th:replace="~{fragments::main-top}"></div>
+<!-- End Main Top -->
+
+
+<!-- Start Main Top -->
+<header th:replace="~{fragments::main-header}"></header>
+<!-- End Main Top -->
+
+<!-- Start Shop Detail  -->
+<div class="shop-detail-box-main">
+    <div>
+
+    </div>
+    <div class="container box-detail" style="background: #fff">
+        <div th:if="${param.success}" class="alert alert-danger text-center" id="addMessage" style="display:none;">
+            <p>thêm sản phẩm thành công</p>
+        </div>
+        <div id="quantityAlert" class="alert alert-warning text-center" style="display: none;">
+            <p>Số lượng sản phẩm đã vượt quá số lượng có sẵn trong kho!</p>
+        </div>
+        <div class="row">
+            <div class="col-xl-5 col-lg-5 col-md-6">
+                <div class="book-left">
+                    <div class="img-detail">
+                        <a>
+                            <img class="d-block w-100 img-pro-de" th:src="'data:image/jpeg;base64,' + ${productDetail.image}"
+                                 alt="First slide">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="book-right col-xl-7 col-lg-7 col-md-6">
+                <h1 th:text="${productDetail.name}"></h1>
+                <div class="product-view">
+                    <div class="product-view-one">
+                        <div class="pro-view-supplier">
+                            <span>Nhà cung cấp:</span>
+                            <span>NXB Tổng Hợp</span>
+                        </div>
+                        <div class="pro-view-author">
+                            <span>Tác Giả:</span>
+                            <span>Võ Chí Nhất</span>
+                        </div>
+                    </div>
+                    <div class="product-view-two">
+                        <div class="pro-view-supplier">
+                            <span>Nhà xuất bản:</span>
+                            <span>NXB Tổng Hợp</span>
+                        </div>
+                        <div class="pro-view-author">
+                            <span>Hình thức bìa:</span>
+                            <span>Bìa mềm</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="col-md-12 price-block d-flex">
+                        <p class="pro-curr-price" th:text="${#numbers.formatDecimal(productDetail.costPrice, 0, 'POINT', 0, 'COMMA') + 'đ'}"></p>
+                        <p class="pro-old-price" th:text="${#numbers.formatDecimal(productDetail.salePrice, 0, 'POINT', 0, 'COMMA') + 'đ'}"></p>
+                    </div>
+                    <div class="pro-view-add-box">
+                        <form th:action="@{/add-to-cart}" method="post" id="addToCartForm">
+                            <input type="hidden" name="id" th:value="${productDetail.id}"/>
+                            <div class="cart-hol">
+                                <div class="catalog-pro-details">
+                                    <div class="pro-view-quantity">
+                                        <label th:for="quantity" >Số lượng:</label>
+                                        <div class="quantity-box-block">
+                                            <a class="btn-subtract-quantity">
+                                                <img th:src="@{/images/sub.png}" alt="" style="width: 12px; height: auto">
+                                            </a>
+                                            <input class="input-quantity" type="text" th:name="quantity" id="quantity" th:max="999"
+                                                   th:min="1" th:align="center" th:value="1" >
+                                            <a class="btn-add-quantity">
+                                                <img th:src="@{/images/add.png}" alt="" style="width: 12px; height: auto">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cart-hol-inner">
+                                    <button type="submit" class="btn-cart" name="action" value="add">
+                                        <span class="icon_cart">
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                        </span>
+                                        <span>Thêm vào giỏ hàng</span>
+                                    </button>
+                                    <input type="hidden" th:value="${productDetail.id}" name="id" class="form-control">
+                                    <button type="submit" name="action" value="buy" class="btn-buy">
+                                        <span>Mua Ngay</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="call-box">
+                            <span>Gọi đặt hàng:&nbsp;</span>
+                            <p class="call-number">
+                                <a>(028) 3820 7153</a>
+                            </p>
+                            <span>&nbsp;hoặc&nbsp;</span>
+                            <p class="call-number">
+                                <a>058 513 3268</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="pro-view-promotion">
+                    <span>Thông tin khuyến mãi</span>
+                    <div class="promotion-des">
+                        <ul>
+                            <li>Đổi trả hàng trong vòng 7 ngày</li>
+                            <li>Freeship nội thành Sài Gòn từ 150.000đ.</li>
+                            <li>Freeship toàn quốc từ 250.000đ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- End Cart -->
+
+<!-- Start Footer  -->
+<footer th:replace="~{fragments::footer}">
+</footer>
+
+<div th:replace="~{fragments::script}"></div>
+
+<script th:inline="javascript">
+    $(document).ready(function() {
+        var maxQuantity = 10;
+        var quantityAlert = $("#quantityAlert");
+
+        $(".btn-subtract-quantity").click(function() {
+            var inputField = $(this).siblings(".input-quantity");
+            var currentValue = parseInt(inputField.val());
+            if (currentValue > 1) {
+                inputField.val(currentValue - 1);
+            }
+        });
+
+        $(".btn-add-quantity").click(function() {
+            var inputField = $(this).siblings(".input-quantity");
+            var currentValue = parseInt(inputField.val());
+            if (currentValue < maxQuantity) {
+                inputField.val(currentValue + 1);
+            } else {
+                quantityAlert.show();
+            }
+        });
+    });
+</script>
+
+
+</body>
+
+</html>

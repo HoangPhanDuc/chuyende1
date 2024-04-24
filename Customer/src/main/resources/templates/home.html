@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<!-- Basic -->
+
+<head th:replace="~{fragments::head}">
+
+</head>
+
+<body>
+<div th:replace="~{fragments::main-top}"></div>
+<!-- End Main Top -->
+
+<!-- Start Main Top -->
+<header th:replace="~{fragments::main-header}"></header>
+<!-- End Main Top -->
+
+<!-- Start Top Search -->
+<div th:replace="~{fragments::top-search}">
+</div>
+<!-- End Top Search -->
+
+<!--Start Product-->
+
+<div class="product-wrapper" th:each="category : ${categories}">
+    <div>
+        <div class="tabs-header">
+            <div class="title-all">
+                <h1 th:text="${category.name}"></h1>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+            <div class="col col-lg-3 col-md-6" th:each="product : ${products}"
+                 th:if="${category.name == product.category.name}">
+                <div class="tab-content-books">
+                    <ul class="product-list">
+                        <li class="product-list-items">
+                            <div class="inner-item">
+                                <div class="item-container">
+                                    <a class="item-link" th:href="@{'/product-detail/' + ${product.id}}">
+                                        <img class="product-img" alt="" th:src="@{'data:image/jpeg;base64,' + ${product.image}}">
+                                    </a>
+                                </div>
+                                <div>
+                                    <a th:href="@{'/product-detail/' + ${product.id}}">
+                                        <h2 class="product-name" th:text="${product.name}">anv
+                                        </h2>
+                                    </a>
+
+                                    <div class="price-label">
+                                        <span class="current-price" th:text="${#numbers.formatDecimal(product.costPrice, 0, 'POINT', 0, 'COMMA') + 'đ'}">
+                                        </span>
+                                        <div class="old-price" th:text="${#numbers.formatDecimal(product.salePrice, 0, 'POINT', 0, 'COMMA') + 'đ'}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Product-->
+
+<!-- Start Footer  -->
+<footer th:replace="~{fragments::footer}">
+
+</footer>
+
+
+<!-- ALL JS FILES -->
+<div th:replace="~{fragments::script}"></div>
+</body>
+
+</html>

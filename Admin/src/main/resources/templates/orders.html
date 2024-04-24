@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="~{fragments::header}"></head>
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!--Sidebar-->
+    <ul th:replace="~{fragments::sidebar}"></ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="~{fragments::top-navbar}"></nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div th:if="${success}" class="text-center alert alert-success">
+                <p th:text="${success}">
+                </p>
+            </div>
+            <div class="table-main table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="order-date">Order Date</th>
+                        <th class="price-pr">Order Status</th>
+                        <th class="quantity-orders">Quantity</th>
+                        <th class="quantity-box">Total Price</th>
+                        <th class="total-pr">Payment Method</th>
+                        <th class="user-name">User name</th>
+                        <th class="phone">Phone</th>
+                        <th class="address">Address</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td class="order-date">
+                            <p th:text="${order.orderDate}"></p>
+                        </td>
+                        <td class="price-pr">
+                            <p th:text="${order.orderStatus}"></p>
+                        </td>
+                        <td class="quantity-box" th:text="${order.quantity}"></td>
+                        <td class="total-pr">
+                            <p style="color: blue" th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'COMMA') + 'đ'}"></p>
+                        </td>
+                        <td class="total-pr" style="color: black">
+                            <p style="color: red" th:text="${order.paymentMethod}"></p>
+                        </td>
+                        <td class="name-user">
+                            <p th:text="${order.customer.username}"></p>
+                        </td>
+                        <td class="phone-number">
+                            <p th:text="${order.customer.phoneNumber}"></p>
+                        </td>
+                        <td class="address">
+                            <p th:text="${order.customer.address}"></p>
+                        </td>
+                        <td class="d-flex">
+                            <a th:if="${order.orderStatus} != 'Processing'" th:href="@{'/accept-order/' + ${order.id}}"
+                               class="btn btn-primary mr-1">Accept</a>
+                            <a th:if="${order.orderStatus} != 'Canceled'" th:href="@{'/cancel-order/' + ${order.id}}"
+                               class="btn btn-danger">Cancel</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <!-- End of Main Content -->
+
+                <!-- Footer -->
+                <footer th:replace="~{fragments::footer}"></footer>
+                <!-- End of Footer -->
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+        </div>
+    </div>
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a th:replace="~{fragments::scroll}"></a>
+
+<!--Add Categories Modal-->
+
+
+<!--End-->
+
+<!-- End -->
+<!-- Bootstrap core JavaScript-->
+<div th:replace="~{fragments::script}"></div>
+
+<script th:src="@{/js/categories.js}"></script>
+</body>
+
+</html>

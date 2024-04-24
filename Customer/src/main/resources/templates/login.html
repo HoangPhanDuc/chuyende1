@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<!-- Basic -->
+<head th:replace="~{fragments::head}">
+</head>
+
+<body>
+    <!-- Start Main Top -->
+    <div th:replace="~{fragments::main-top}">
+
+    </div>
+    <!-- End Main Top -->
+
+    <!-- Start Main Top -->
+    <header th:replace="~{fragments::main-header}" >
+    </header>
+    <!-- End Main Top -->
+
+    <!-- Start Top Search -->
+    <div th:replace="~{fragments::top-search}">
+    </div>
+    <!-- End Top Search -->
+
+    <div class="container" id="container">
+        <div class="form-container sign-in-container">
+            <form class="form-auth" th:action="@{/do-login}" method="post">
+                <h1>Sign in</h1>
+                <div th:if = "${param.error}" class="alert alert-danger text-center">
+                    <p>Invalid username or password</p>
+                </div>
+                <div th:if = "${param.logout}" class="alert alert-success text-center">
+                    You have been logged out!
+                </div>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <span>or use your account</span>
+<!--                <input class="form_input" type="email" name="email" id="email" placeholder="Email" />-->
+                <input class="form_input" type="text" name="username" placeholder="Username" />
+                <input class="form_input" type="password" name="password" id="password" placeholder="Password" />
+                <a href="#">Forgot your password?</a>
+                <button type="submit" class="btn-auth">Sign In</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <a th:href="@{/register}" style="color: #fff">
+                        <button class="ghost btn-over btn-auth" >
+                            Sign Up
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start copyright  -->
+    <footer th:replace="~{fragments::footer}"></footer>
+    <!-- End copyright  -->
+
+    <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+
+    <!-- ALL JS FILES -->
+    <div th:replace="~{fragments::script}"></div>
+</body>
+
+</html>

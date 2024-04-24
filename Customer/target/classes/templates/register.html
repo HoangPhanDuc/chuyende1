@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<!-- Basic -->
+<head th:replace="~{fragments::head}">
+</head>
+
+<body>
+<!-- Start Main Top -->
+<div th:replace="~{fragments::main-top}">
+
+</div>
+<!-- End Main Top -->
+
+<!-- Start Main Top -->
+<header th:replace="~{fragments::main-header}" >
+</header>
+<!-- End Main Top -->
+
+<!-- Start Top Search -->
+<div th:replace="~{fragments::top-search}">
+</div>
+<!-- End Top Search -->
+
+<div class="container" id="container">
+    <div class="form-container sign-up-container">
+        <form class="form-auth" th:action="@{/do-register}" method="post" th:object="${customerDto}">
+            <h1>Create Account</h1>
+            <div th:if="${success}">
+                <p class="alert alert-success" th:text="${success}"></p>
+            </div>
+            <div th:if = "${password}" class="text-center alert-warning">
+                <p th:text="${password}"></p>
+            </div>
+            <div th:if="${errorUsername != null}">
+                <p class="alert alert-danger" th:text="${errorUsername}"></p>
+            </div>
+            <div th:if="${error != null && errorUsername == null}">
+                <p class="alert alert-danger" th:text="${error}"></p>
+            </div>
+            <div class="social-container">
+                <a th:href="@{/}" class="social"><i class="fab fa-facebook-f"></i></a>
+                <a th:href="@{/}" class="social"><i class="fab fa-google-plus-g"></i></a>
+                <a th:href="@{/}" class="social"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <span>or use your email for registration</span>
+            <input class="form_input" type="text" required placeholder="Name" th:field="*{username}"/>
+            <input class="form_input" type="email" required placeholder="Email" th:field="*{email}"/>
+            <input class="form_input" type="password" required placeholder="Password" th:field="*{password}"/>
+            <div class="alert alert-danger" th:if = "${#fields.hasErrors('password')}"
+                 th:errors = "*{password}">
+            </div>
+            <input class="form_input" type="password" required name="confirm" placeholder="Confirm Password"
+                   th:field="*{confirmPassword}"/>
+            <button class="btn-auth">Sign Up</button>
+        </form>
+    </div>
+    <div class="overlay-container" style="width: 80%">
+        <div class="overlay overlay-sign-in">
+            <div class="overlay-panel overlay-left">
+                <h1>Welcome Back!</h1>
+<!--                <p>To keep connected with us please login with your personal info</p>-->
+                <a th:href="@{/login}" style="color: #fff" >
+                    <button class="ghost btn-over btn-auth" >
+                        Sign In
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ALL JS FILES -->
+<div th:replace="~{fragments::script}"></div>
+</body>
+
+</html>

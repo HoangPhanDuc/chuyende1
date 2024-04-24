@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<!-- Basic -->
+
+<head th:replace="~{fragments::head}">
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+<!-- Start Main Top -->
+<div>
+    <section>
+        <div>
+            <div style="min-height: 100vh">
+                <div th:replace="~{fragments::main-top}">
+                </div>
+                <!-- End Main Top -->
+
+                <!-- Start Main Top -->
+                <header th:replace="~{fragments::main-header}">
+                </header>
+                <!-- End Main Top -->
+
+                <!-- Start Cart  -->
+                <div class="cart-box-main">
+                    <div class="container">
+                        <div id="quantityAlert" class="alert alert-warning text-center" style="display: none;">
+                            <p>Số lượng sản phẩm đã vượt quá số lượng có sẵn trong kho!</p>
+                        </div>
+                        <div class="cart-ui-content row">
+                            <div class="col-lg-12" style="margin-bottom: 12px">
+                                <div class="table-main table-responsive">
+                                    <div class="cart-wrapper-emp" th:if="${check}">
+                                        <div class="cart-emp-inner">
+                                            <div class="text-center">
+                                                <div class="icon-emp-cart">
+                                                    <img class="text-center" th:src="@{/images/ico_emptycart.svg}" alt="empty-cart">
+                                                </div>
+                                                <p class="text-emp-cart">Chưa có sản phẩm trong giỏ hàng của bạn</p>
+                                                <a class="white text-uppercase" th:href="@{/}">
+                                                    <button class="btn-shopping" type="button">
+                                                        Mua sắm ngay
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div th:if="${grandTotal}"  >
+                                        <div class="header-cart-item">
+                                            <div>
+                                                Số lượng
+                                            </div>
+                                            <div>
+                                                Thành tiền
+                                            </div>
+                                            <div></div>
+                                        </div>
+                                        <div class="product-cart" >
+                                            <div class="product-cart-item" th:each="cartItem : ${shoppingCart.cartItems}">
+                                                <div class="img-product-cart">
+                                                    <a>
+                                                        <img th:src="'data:image/jepg;base64,' + ${cartItem.product.image}" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="group-product-info">
+                                                    <div class="info-product-cart">
+                                                        <div>
+                                                            <h2 class="product-name-text">
+                                                                <a th:text="${cartItem.product.name}"></a>
+                                                            </h2>
+                                                        </div>
+                                                        <div class="price-original">
+                                                            <div class="cart-price">
+                                                                <div class="cart-price-box">
+                                                                    <div>
+                                                                        <span class="price-inner" th:text="${#numbers.formatDecimal(cartItem.unitPrice, 0, 'POINT', 0, 'COMMA') + 'đ'}"></span>
+                                                                    </div>
+                                                                    <div class="price-sale">
+                                                                        <span class="price-inner" th:text="${#numbers.formatDecimal(cartItem.salePrice, 0, 'POINT', 0, 'COMMA') + 'đ'}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <form th:action="@{/update-cart}" method="post" class="form-cart">
+                                                        <input type="hidden" name="id" th:value = "${cartItem.product.id}">
+                                                        <div class="number-product-cart">
+                                                            <div class="product-view-quantity-box">
+                                                                <div class="quantity-box-block" >
+                                                                    <button class="btn-subtract-quantity border-0 bg-transparent"
+                                                                            type="submit"
+                                                                            name="action"
+                                                                            value="update"
+                                                                    >
+                                                                        <img th:src="@{/images/sub.png}" alt="" style="width: 12px; height: auto">
+                                                                    </button>
+                                                                    <input class="input-quantity" type="text"
+                                                                           th:name="quantity" id="quantity"
+                                                                           th:max="999" th:min="1"
+                                                                           th:align="center" th:value="${cartItem.quantity}"
+                                                                           step="1" size="4" value="1"
+                                                                    >
+                                                                    <button class="btn-add-quantity border-0 bg-transparent d-flex justify-content-center"
+                                                                            type="submit"
+                                                                            name="action"
+                                                                            value="update"
+                                                                    >
+                                                                        <img th:src="@{/images/add.png}" alt="" style="width: 12px; height: auto">
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="cart-price-total">
+                                                                <span class="cart-price">
+                                                                    <span class="price"
+                                                                          th:text="${#numbers.formatDecimal(cartItem.unitPrice * cartItem.quantity, 0, 'POINT', 0, 'COMMA') + 'đ'}"
+                                                                    >
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="remove-cart">
+                                                            <button type="submit" name="action" value="delete" title="Remove Item">
+                                                                <i class="fa-regular fa-trash-can" style="font-size: 22px"></i>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                            <div></div>
+                            <div class="block-total-cart col-sm-4" th:if = "${grandTotal}">
+                                <div class="total-cart-container">
+                                    <div class="cash-total">
+                                        <div class="total-left">Thành tiền</div>
+                                        <div class="total-right">
+                                            <span class="price" th:text="${#numbers.formatDecimal(grandTotal, 0, 'POINT', 0, 'COMMA') + 'đ'}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="border-product"></div>
+                                    <div class="cash-total title-final-total">
+                                        <div class="total-left">Tổng Số Tiền (gồm VAT)</div>
+                                        <div class="total-right">
+                                            <span class="price" th:text="${#numbers.formatDecimal(grandTotal, 0, 'POINT', 0, 'COMMA') + 'đ'}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="checkout-btn">
+                                    <div class="button-cart">
+                                        <a th:href="@{/check-out}">
+                                            <button class="btn-checkout" title="Thanh Toán" type="button">
+                                                <span>Thanh Toán</span>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Cart -->
+            </div>
+
+            <!-- Start Footer  -->
+            <footer th:replace="~{fragments::footer}"></footer>
+        </div>
+    </section>
+</div>
+<div th:replace="~{fragments::script}"></div>
+
+<script th:inline="javascript">
+    $(document).ready(function() {
+        var maxQuantity = 10;
+        var quantityAlert = $("#quantityAlert");
+
+        $(".btn-subtract-quantity").click(function() {
+            var inputField = $(this).siblings(".input-quantity");
+            var currentValue = parseInt(inputField.val());
+            if (currentValue > 1) {
+                inputField.val(currentValue - 1);
+            }
+        });
+
+        $(".btn-add-quantity").click(function() {
+            var inputField = $(this).siblings(".input-quantity");
+            var currentValue = parseInt(inputField.val());
+            if (currentValue < maxQuantity) {
+                inputField.val(currentValue + 1);
+            } else {
+                quantityAlert.show();
+            }
+        });
+    });
+</script>
+
+</body>
+
+</html>

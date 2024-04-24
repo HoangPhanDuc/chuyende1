@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<!-- Basic -->
+
+<head>
+    <div th:replace="~{fragments::head}"></div>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+<!-- Start Main Top -->
+<div th:replace="~{fragments::main-top}">
+</div>
+<!-- End Main Top -->
+
+
+<!-- Start Main Top -->
+<header th:replace="~{fragments::main-header}">
+</header>
+<!-- End Main Top -->
+
+<!-- Start Shop Page  -->
+<div class="search-page">
+    <div class="container">
+        <div class="container-inner">
+            <div class="d-flex justify-content-center">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right: 15px">
+                    <div class="search-left">
+                        <div class="search-left-nav bg-white">
+                            <div class="block-category">
+                                <div class="block-title">
+                                    <strong>
+                                        <span>Danh Mục</span>
+                                    </strong>
+                                </div>
+                                <div class="block-content">
+                                    <ul class="category-list" th:each="category : ${categories}">
+                                        <li class="category-list-item"
+                                            th:text="${category.name}"
+                                        >
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 bg-white" style="padding: 0 15px">
+                    <div class="search-content">
+                        <div class="search-result">
+                            <div class="row category-products">
+                                <ul class="product-grid">
+                                    <li th:each="product : ${products}">
+                                        <div class="item-inner">
+                                            <div class="product-search-inner" >
+                                                <div class="product-search-img">
+                                                    <div class="img-container">
+                                                        <a th:href="@{'/product-detail/' + ${product.id}}">
+                                                            <span>
+                                                                <img th:src="'data:image/jpeg;base64,' + ${product.image}"
+                                                                     class="img-inner" alt="">
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <h2 class="product-search-name">
+                                                    <a th:href="@{'/product-detail/' + ${product.id}}"
+                                                       th:text="${product.name}"
+                                                    ></a>
+                                                </h2>
+                                                <div class="price-label">
+                                                    <p class="special-price">
+                                                        <span class="price" th:text="${#numbers.formatDecimal(product.costPrice, 0, 'POINT', 0, 'COMMA') + 'đ'}"></span>
+                                                    </p>
+                                                    <p class="old-price bg-white">
+                                                        <span class="price" th:text="${#numbers.formatDecimal(product.salePrice, 0, 'POINT', 0, 'COMMA') + 'đ'}"></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End Shop Page -->
+
+
+<!-- Start Footer  -->
+<footer th:replace="~{fragments::footer}">
+</footer>
+
+
+<div th:replace="~{fragments::script}"></div>
+</body>
+
+</html>
